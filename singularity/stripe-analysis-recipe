@@ -12,6 +12,7 @@ From: continuumio/miniconda3
 export PATH=$PATH:/opt/conda/bin
 
 ## Update conda.
+
 conda update -n base -y -c defaults conda
 
 ## Install Conda Environment
