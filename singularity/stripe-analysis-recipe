@@ -29,7 +29,6 @@ bioconductor-genomicranges \
 bioconductor-genomicfeatures \
 bioconductor-rtracklayer \
 bioconductor-chipseeker \
-bioconductor-tsrchitect \
 bioconductor-gviz \
 bioconductor-edger
 
@@ -40,14 +39,3 @@ conda update -n stripe-seq-analysis -y -c conda-forge -c bioconda --all
 ## Clean up extra files.
 
 conda clean -y --all
-
-## Update TSRchitect
-## ----------
-
-## Load conda environment.
-
-conda activate stripe-seq-analysis
-
-## Update TSRchitect.
-
-Rscript -e "devtools::install_github("BrendelGroup/TSRchitect", upgrade=FALSE)" 
