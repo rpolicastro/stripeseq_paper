@@ -1,0 +1,46 @@
+
+bootstrap: docker
+From: continuumio/miniconda3
+
+%post
+
+## Prepare Conda
+## ----------
+
+## Add conda to path.
+
+export PATH=$PATH:/opt/conda/bin
+
+## Update conda.
+conda update -n base -y -c defaults conda
+
+## Install Conda Environment
+## ----------
+
+## Create environment.
+
+conda create -n stripe-seq-analysis -y -c conda-forge -c bioconda \
+deeptools \
+r-tidyverse \
+r-devtools \
+r-eulerr \
+bioconductor-genomicranges \
+bioconductor-genomicfeatures \
+bioconductor-rtracklayer \
+bioconductor-chipseeker \
+bioconductor-tsrchitect \
+bioconductor-gviz \
+bioconductor-edger
+
+## Update environment.
+
+conda update -n stripe-seq-analysis -y -c conda-forge -c bioconda --all
+
+## Clean up extra files.
+
+conda clean -y --all
+
+## Update TSRchitect
+## ----------
+
+Rscript -e "devtools::install_github("BrendelGroup/TSRchitect", upgrade=FALSE)" 
