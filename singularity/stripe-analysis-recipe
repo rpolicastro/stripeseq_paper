@@ -46,7 +46,7 @@ conda clean -y --all
 
 ## Load conda environment.
 
-source activate stripe-seq-analysis
+conda activate stripe-seq-analysis
 
 ## Update TSRchitect.
 
