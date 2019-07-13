@@ -44,4 +44,10 @@ conda clean -y --all
 ## Update TSRchitect
 ## ----------
 
+## Load conda environment.
+
+source activate stripe-seq-analysis
+
+## Update TSRchitect.
+
 Rscript -e "devtools::install_github("BrendelGroup/TSRchitect", upgrade=FALSE)" 
