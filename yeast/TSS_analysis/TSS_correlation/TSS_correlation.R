@@ -52,7 +52,7 @@ counts %>%
 
 ## Only keep TSS positions that have at least 3 samples with a read
 
-#filtered.counts <- counts[rowSums(counts > 1) >= 3,]
+filtered.counts <- counts[rowSums(counts > 1) >= 3,]
 
 ## Create EdgeR object.
 
@@ -83,7 +83,9 @@ write.table(
 ## Plotting Correlation
 ## ----------
 
-## Get sample permutations for plotting correlations.
+colnames(TMM) <- TMM %>%
+        colnames %>%
+        gsub(., pattern="-", replacement="_")
 
 sample.combinations <- TMM %>%
 	colnames %>%
@@ -94,12 +96,13 @@ sample.combinations <- TMM %>%
 	dplyr::filter(sample_1 != sample_2)
 
 ## Plot the pairwise correlations.
+
 pdf("TSS_Correlation_Plots.pdf")
 pmap(
 	sample.combinations,
 	function(sample_1, sample_2) {
-		ggplot(TMM, aes(x=sample_1, y=sample_2)) +
-			geom_point()
+		p <- ggplot(TMM, aes_string(x=sample_1, y=sample_2)) + geom_point()
+		print(p)
 	}
 )
 dev.off()
