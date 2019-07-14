@@ -52,7 +52,8 @@ counts %>%
 
 ## Only keep TSS positions that have at least 3 samples with a read
 
-filtered.counts <- counts[rowSums(counts > 1) >= 3,]
+# disabled for now
+#filtered.counts <- counts[rowSums(counts > 1) >= 3,]
 
 ## Create EdgeR object.
 
