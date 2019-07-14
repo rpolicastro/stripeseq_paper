@@ -3,6 +3,7 @@
 library("TSRchitect")
 library("GenomicRanges")
 library("rtracklayer")
+library("tidyverse")
 
 ############
 ## Get TSSs
@@ -39,3 +40,24 @@ tss.obj <- processTSS(
 
 ## Pull TSSs from TSRchitect Object and Export
 ## ----------
+
+## Grab TSSs from object.
+
+TSSs <- tss.obj@tssCountData %>%
+	setNames(tss.obj@sampleNames)
+
+## Convert TSSs to GRanges object.
+
+TSSs.granges <- map(
+	TSSs,
+	~ GRanges(
+		seqnames=.$seq,
+		ranges=IRanges(start=.$TSS, width=1),
+		strand=.$strand,
+		score=.$nTAGs
+	)
+)
+
+## Export GRanges objects for further analysis.
+
+saveRDS(TSSs.granges, "Yeast_TSSs.RDS")
