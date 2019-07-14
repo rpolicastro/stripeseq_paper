@@ -3,6 +3,7 @@
 library("GenomicRanges")
 library("tidyverse")
 library("edgeR")
+library("gtools")
 
 ##########################################
 ## Get TSS Correlation Between Replicates
@@ -18,12 +19,13 @@ TSSs <- readRDS("../get_TSSs/Yeast_TSSs.RDS")
 ## Prepare counts sheet.
 
 counts <- TSSs %>%
-	# Convert GRanges to tibbles.
-	map(~as_tibble(.)) %>%
 	# Make the TSS name a concatenation of the chromosome, start, end, and strand.
-	map(~mutate(., position=paste(seqnames, start, end, strand, sep="_"))) %>%
+	map(
+		~as_tibble(.) %>%
+		mutate(position=paste(seqnames, start, end, strand, sep="_")) %>%
+		dplyr::select(position, score)
+	) %>%
 	# Select the TSS name column and the score.
-	map(~dplyr::select(., position, score)) %>%
 	# Turn the list of tibbles into one tibble with a column specify what tibble the row came from.
 	bind_rows(.id="sample") %>%
 	# Turn samples into column and TSS names into rows.
@@ -37,10 +39,8 @@ counts <- TSSs %>%
 ## Export raw counts.
 
 counts %>%
-	# Covnert back to data frame for export.
-	as.data.frame %>%
-	# Change the rownames back to a column.
-	rownames_to_column("TSS_Identifier") %>%
+	# Covnert back to tibble for export.
+	as_tibble(rownames="TSS_Identifier") %>%
 	# Export raw counts.
 	write.table(
 		., "Raw_TSS_Counts.tsv",
@@ -49,6 +49,10 @@ counts %>%
 
 ## TMM Normalization of Counts
 ## ----------
+
+## Only keep TSS positions that have at least 3 samples with a read
+
+#filtered.counts <- counts[rowSums(counts > 1) >= 3,]
 
 ## Create EdgeR object.
 
@@ -59,19 +63,15 @@ edger <- DGEList(
 
 ## Normalize the counts.
 
-edger <- calcNormFactors(edger)
+edger <- calcNormFactors(edger, method="TMM")
 
 ## Get TMM normalized counts.
 
 TMM <- counts %>%
 	# After running calcNormFactors edgeR::cpm returns TMM
 	cpm %>%
-	# Convert to data frame.
-	as.data.frame %>%
-	# Convert the rownames to a column.
-	rownames_to_column("TSS_position") %>%
-	# Convert to tibble for convenience.
-	as_tibble
+	# Convert to tibble.
+	as_tibble(rownames="TSS_position")
 
 ## Export the TMM normalized counts.
 
@@ -83,4 +83,23 @@ write.table(
 ## Plotting Correlation
 ## ----------
 
+## Get sample permutations for plotting correlations.
 
+sample.combinations <- TMM %>%
+	colnames %>%
+	discard(. == "TSS_position") %>%
+	combinations(6, 2, .) %>%
+	as_tibble %>%
+	dplyr::rename("sample_1"=1, "sample_2"=2) %>%
+	dplyr::filter(sample_1 != sample_2)
+
+## Plot the pairwise correlations.
+pdf("TSS_Correlation_Plots.pdf")
+pmap(
+	sample.combinations,
+	function(sample_1, sample_2) {
+		ggplot(TMM, aes(x=sample_1, y=sample_2)) +
+			geom_point()
+	}
+)
+dev.off()
