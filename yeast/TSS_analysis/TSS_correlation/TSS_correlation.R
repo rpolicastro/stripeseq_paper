@@ -97,12 +97,19 @@ sample.combinations <- TMM %>%
 
 ## Plot the pairwise correlations.
 
-pdf("TSS_Correlation_Plots.pdf")
+dir.create("corr_plots")
+
 pmap(
 	sample.combinations,
 	function(sample_1, sample_2) {
-		p <- ggplot(TMM, aes_string(x=sample_1, y=sample_2)) + geom_point()
+		p <- ggplot(TMM, aes_string(x=sample_1, y=sample_2)) +
+			geom_point() +
+			theme_bw() +
+			theme(text=element_text(size=24)) +
+			geom_abline(intercept=0, slope=1, lty=2)
+		
+		png(file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".png")), width=850, height=850)
 		print(p)
+		dev.off()
 	}
 )
-dev.off()
