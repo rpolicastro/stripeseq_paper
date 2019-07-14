@@ -1,0 +1,7 @@
+SAMPLE	ReplicateID	FILE
+S288C-unpooled_WT-100ng_1	1	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-unpooled_WT-100ng_1_Aligned.out_cleaned.bam
+S288C-unpooled_WT-100ng_2	1	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-unpooled_WT-100ng_2_Aligned.out_cleaned.bam
+S288C-unpooled_WT-100ng_3	1	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-unpooled_WT-100ng_3_Aligned.out_cleaned.bam
+S288C-pooled_WT-100ng_1	2	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-pooled_WT-100ng_1_Aligned.out_cleaned.bam
+S288C-pooled_WT-100ng_2	2	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-pooled_WT-100ng_2_Aligned.out_cleaned.bam
+S288C-pooled_WT-100ng_3	2	/N/dc2/scratch/rpolicas/stripe_paper/downstream_analysis/stripeseq_paper/yeast/aligned_reads/S288C-pooled_WT-100ng_3_Aligned.out_cleaned.bam
