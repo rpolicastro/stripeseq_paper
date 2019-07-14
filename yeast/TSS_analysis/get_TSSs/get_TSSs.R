@@ -16,7 +16,7 @@ library("rtracklayer")
 tss.obj <- loadTSSobj(
 	experimentTitle="Yeast STRIPE-seq",
 	inputDir="../../aligned_reads/",
-	n.cores <- 4,
+	n.cores = 4,
 	isPairedBAM=TRUE,
 	isPairedBED=FALSE,
 	sampleSheet="sample_sheet.tsv",
