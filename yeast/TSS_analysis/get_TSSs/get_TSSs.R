@@ -1,5 +1,9 @@
 #!/usr/bin/env Rscript
 
+library("TSRchitect")
+library("GenomicRanges")
+library("rtracklayer")
+
 ############
 ## Get TSSs
 ############
