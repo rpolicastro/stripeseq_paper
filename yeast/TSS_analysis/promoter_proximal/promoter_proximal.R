@@ -1,39 +1,16 @@
 #!/usr/bin/env Rscript
 
-library("GenomicRagnes")
-library("GenomicFeatures")
-library("ChIPseeker")
+library("GenomicRanges")
 library("tidyverse")
 
 ####################################
 ## Get Promoter Proximal Percentage
 ####################################
 
-## Annotate TSSs
+## Load Annotated TSSs
 ## ----------
 
-## Load TSS data.
-
-TSSs <- readRDS("../get_TSSs/Yeast_TSSs.RDS")
-
-## Load genomic annotation.
-
-annotation <- makeTxDbFromGFF(
-	"../../genome/Saccharomyces_cerevisiae.R64-1-1.97.gtf",
-	format="gtf"
-)
-
-## Annotate TSSs.
-
-TSSs.annotated <- map(
-	TSSs,
-	~ annotatePeak(.,
-		tssRegion=c(-1000,100),
-		TxDb=annotation,
-		sameStrand=TRUE
-	) %>%
-	as_tibble
-)
+TSSs.annotated <- readRDS("../annotate_TSSs/TSSs_annotated.RDS")
 
 ## Calculate Promoter Proximal
 ## ----------
@@ -84,6 +61,7 @@ for (threshold in 1:50) {
 }
 
 ## Reorder columns.
+
 promoter.data <- promoter.data %>% dplyr::select(
 	sample, annotation, threshold, n.unique,
 	perc.unique, n.total, perc.total, n.genes
