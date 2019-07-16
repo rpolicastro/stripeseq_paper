@@ -9,3 +9,8 @@ This directory contains the TSS analysis for yeast STRIPE-seq data.
 - **make_bedgraphs**: Create bedgraphs using TMM normalized counts.
 - **annotate_TSSs**: Annotate TSSs to nearest transcript.
 - **TSS_genomic_distribution**: Get fraction of TSSs that are promoter proximal while iterating through global threshold values.
+- **TSS_average_plot**: Average plots of TSSs cenetered on start codon (for yeast data).
+
+## Run Analysis.
+
+To redo the execution of the analysis enter `bash RUN.sh`.
