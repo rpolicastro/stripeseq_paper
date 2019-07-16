@@ -24,7 +24,7 @@ dir.create("TSS_average_plots")
 
 plot.TSS.averages <- function(x) {
 	p <- ggplot(TSSs[[x]], aes(distanceToTSS)) +
-		geom_density(fill="dodgerblue", color="dodgerblue", alpha=0.8) +
+		geom_density(fill="dodgerblue", color="dodgerblue") +
 		xlim(-2000,2000) +
 		theme_bw() +
 		theme(text=element_text(size=24))
