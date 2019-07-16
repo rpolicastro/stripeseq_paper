@@ -8,8 +8,6 @@ axis.track <- GenomeAxisTrack(col="black",
                               scale=0.1,
                               col.range="black")
 
-options(ucscChromosomeNames=FALSE)
-
 #create gene annotation track
 genome.track <- GeneRegionTrack(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene,
                                 genome="sacCer3",
