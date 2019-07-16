@@ -15,12 +15,7 @@ TSSs <- readRDS("../annotate_TSSs/TSSs_annotated.RDS")
 
 ## Grab info needed for plotting.
 
-TSSs <- map(
-	TSSs,
-	~ dplyr::select(., distanceToTSS, score) %>%
-	group_by(distanceToTSS) %>%
-	summarize(sum=sum(score))
-)
+TSSs <- map(TSSs, ~ dplyr::select(., distanceToTSS, score))
 
 ## Plot Data
 ## ----------
@@ -28,8 +23,8 @@ TSSs <- map(
 dir.create("TSS_average_plots")
 
 plot.TSS.averages <- function(x) {
-	p <- ggplot(TSSs[[x]], aes(x=distanceToTSS, y=sum)) +
-		geom_line(fill="dodgerblue", color="dodgerblue", alpha=0.8) +
+	p <- ggplot(TSSs[[x]], aes(distanceToTSS)) +
+		geom_density(fill="dodgerblue", color="dodgerblue", alpha=0.8) +
 		xlim(-2000,2000) +
 		theme_bw() +
 		theme(text=element_text(size=24))
