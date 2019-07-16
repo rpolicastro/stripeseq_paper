@@ -8,8 +8,6 @@ axis.track <- GenomeAxisTrack(col="black",
                               scale=0.1,
                               col.range="black")
 
-options(ucscChromosomeNames=FALSE)
-
 #create gene annotation track
 genome.track <- GeneRegionTrack(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene,
                                 genome="sacCer3",
@@ -34,7 +32,7 @@ genome.track <- GeneRegionTrack(TxDb.Scerevisiae.UCSC.sacCer3.sgdGene,
 #load data tracks and plot at HHT1 (narrow TSR)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -44,7 +42,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -68,7 +66,7 @@ dev.off()
 #load data tracks and plot at RPS8B (multiple TSRs)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -78,7 +76,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -102,7 +100,7 @@ dev.off()
 #load data tracks and plot at PEX22 (TSR includes start codon)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -112,7 +110,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -136,7 +134,7 @@ dev.off()
 #load data tracks and plot at AIM39 (TSR downstream of annotated start codon)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -146,7 +144,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -170,7 +168,7 @@ dev.off()
 #load data tracks and plot at GCN4 (upstream TSR)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -180,7 +178,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -204,7 +202,7 @@ dev.off()
 #load data tracks and plot at CCT8 (sense/antisense TSRs)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -214,7 +212,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
@@ -238,7 +236,7 @@ dev.off()
 #load data tracks and plot at RPS15 (broad TSR)
 S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkblue",
                                         fill.histogram="darkblue",
@@ -248,7 +246,7 @@ S288C_unpooled.1.pos.track <- DataTrack(range="pos_S288C-unpooled_WT-100ng_1.bed
 
 S288C_unpooled.1.min.track <- DataTrack(range="min_S288C-unpooled_WT-100ng_1.bedgraph", 
                                         genome="sacCer3", 
-                                        name="S288C pooled rep 1",
+                                        name="S288C unpooled rep 1",
                                         type="hist",
                                         col.histogram="darkcyan",
                                         fill.histogram="darkcyan",
