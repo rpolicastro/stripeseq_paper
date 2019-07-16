@@ -17,13 +17,23 @@ TSSs <- readRDS("../annotate_TSSs/TSSs_annotated.RDS")
 
 TSSs <- map(TSSs, ~ dplyr::select(., distanceToTSS, score))
 
+## Split out individual TSSs from summed TSSs.
+
+TSSs.split <- map(
+	TSSs,
+	~pmap(., function(distanceToTSS, score) rep(distanceToTSS, score)) %>%
+		unlist %>%
+		enframe(value="distanceToTSS") %>%
+		dplyr::select(-name)
+)
+
 ## Plot Data
 ## ----------
 
 dir.create("TSS_average_plots")
 
 plot.TSS.averages <- function(x) {
-	p <- ggplot(TSSs[[x]], aes(distanceToTSS)) +
+	p <- ggplot(TSSs.split[[x]], aes(distanceToTSS)) +
 		geom_density(fill="dodgerblue", color="dodgerblue") +
 		xlim(-2000,2000) +
 		theme_bw() +
@@ -34,4 +44,4 @@ plot.TSS.averages <- function(x) {
 	dev.off()
 }
 
-map(names(TSSs), ~plot.TSS.averages(.))
+map(names(TSSs.split), ~plot.TSS.averages(.))
