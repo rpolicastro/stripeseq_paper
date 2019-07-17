@@ -30,3 +30,40 @@ TSRs <- map(
 		annotation == "Distal Intergenic" ~ "intergenic"
 	))
 )
+
+## Plotting TSR Genomic Distribution
+## ----------
+
+plot.distribution <- function(x) {
+	plot.data <- TSRs[[x]] %>%
+		mutate(
+			"sample"="genomic_distribution",
+			"cleaned.annotations"=factor(
+				cleaned.annotations,
+				levels=c("intergenic", "downstream", "intron", "exon", "promoter")
+			)
+		)
+	
+	p <- ggplot(plot.data, aes(sample, fill=cleaned.annotations)) +
+		geom_bar(position="fill") +
+		scale_fill_viridis_d(direction=-1, name="Annotation") +
+		coord_flip() +
+		ylab("Fraction") +
+		theme_minimal() +
+		theme(
+			axis.text.y=element_blank(),
+			axis.title.y=element_blank(),
+			text=element_text(size=18)
+		)
+
+	png(
+		file.path("distribution_plots", paste0("Genomic-Distribution_", x, ".png")),
+		width=500, height=150
+	)
+	print(p)
+	dev.off() 
+}
+
+dir.create("distribution_plots")
+
+map(names(TSRs), ~plot.distribution(.))
