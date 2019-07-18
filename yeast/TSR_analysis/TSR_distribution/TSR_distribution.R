@@ -34,6 +34,8 @@ TSRs <- map(
 ## Plotting TSR Genomic Distribution
 ## ----------
 
+## Function to plot distribution.
+
 plot.distribution <- function(x) {
 	plot.data <- TSRs[[x]] %>%
 		mutate(
@@ -64,6 +66,36 @@ plot.distribution <- function(x) {
 	dev.off() 
 }
 
+## Create output directory.
+
 dir.create("distribution_plots")
 
+## Plot distributions.
+
 map(names(TSRs), ~plot.distribution(.))
+
+## Exporting Promoter Stats
+## ----------
+
+## Create output directory.
+
+dir.create("distribution_stats")
+
+## Get summary stats for TSR distribution.
+
+promoter.stats <- map(
+	TSRs,
+	~count(., cleaned.annotations, name="nTSRs") %>%
+		arrange(desc(nTSRs)) %>%
+		mutate("perc"=round(nTSRs/sum(nTSRs), 3))
+)
+
+## Export summary stats to tsv.
+
+map(
+	names(promoter.stats),
+	~write.table(
+		promoter.stats[[.]], file.path("distribution_stats", paste0("TSR-Genomic-Distribution_", ., ".tsv")),
+		sep="\t", col.names=TRUE, row.names=FALSE, quote=FALSE
+	)
+)
