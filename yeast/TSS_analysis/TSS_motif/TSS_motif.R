@@ -43,6 +43,31 @@ TSS.region <- map(
 
 TSS.sequences <- map(TSS.region, ~getSeq(FASTA, .))
 
+## Export Sequence Fasta Files
+## ----------
+
+## Create export directory.
+
+dir.create("TSS_sequences")
+
+## Rename seq names.
+
+rename.seqs <- function(x) {names(x) <- sprintf("TSS_%s",1:length(x)); return(x)}
+
+TSS.seq.export <- map(TSS.sequences, ~rename.seqs(.))
+
+## Export as Fasta.
+
+export.fasta <- function(x) {
+	writeXStringSet(
+		TSS.seq.export[[x]],
+		file.path("TSS_sequences", paste0("TSS-Sequences_", x, ".fasta")),
+		format="fasta"
+	)
+}
+
+map(names(TSS.seq.export), ~export.fasta(.))
+
 ## Plot Data
 ## ----------
 
