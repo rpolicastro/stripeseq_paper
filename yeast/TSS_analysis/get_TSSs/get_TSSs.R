@@ -2,7 +2,6 @@
 
 library("TSRchitect")
 library("GenomicRanges")
-library("rtracklayer")
 library("tidyverse")
 
 ############
@@ -38,7 +37,12 @@ tss.obj <- processTSS(
 	writeTable=FALSE
 )
 
-## Pull TSSs from TSRchitect Object and Export
+## Export TSRchitect Object
+## ----------
+
+saveRDS(tss.obj, "TSRchitect_TSS_Object.RDS") 
+
+## Export TSS GRanges
 ## ----------
 
 ## Grab TSSs from object.
