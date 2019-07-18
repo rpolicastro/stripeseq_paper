@@ -19,7 +19,7 @@ TSRs <- map(
 	TSRs,
 	~ dplyr::select(.,
 		geneId, transcriptId,
-		score, nTSSs,
+		nTAGs, nTSSs, tsrPeak, tsrWdth, tsrTrq, tsrSI, tsrMSI,
 		annotation, distanceToTSS
 	) %>%
 	mutate(cleaned.annotations=case_when(
