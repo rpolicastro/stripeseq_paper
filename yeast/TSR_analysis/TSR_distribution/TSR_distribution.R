@@ -31,6 +31,10 @@ TSRs <- map(
 	))
 )
 
+## Export cleaned TSR data as R object.
+
+saveRDS(TSRs, "TSR_data.RDS")
+
 ## Plotting TSR Genomic Distribution
 ## ----------
 
