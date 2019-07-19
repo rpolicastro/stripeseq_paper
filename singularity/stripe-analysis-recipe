@@ -27,10 +27,13 @@ r-devtools \
 r-eulerr \
 bioconductor-genomicranges \
 bioconductor-genomicfeatures \
+bioconductor-biostrings \
+bioconductor-rsamtools \
 bioconductor-rtracklayer \
 bioconductor-chipseeker \
 bioconductor-gviz \
-bioconductor-edger
+bioconductor-edger \
+bioconductor-seqlogo
 
 ## Update environment.
 
