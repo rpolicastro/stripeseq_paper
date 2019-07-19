@@ -31,6 +31,15 @@ FASTA <- FaFile("../../genome/Saccharomyces_cerevisiae.R64-1-1.dna_sm.toplevel.f
 
 TSSs.filtered <- map(TSSs, ~.[score(.) >= 3])
 
+## Get TSS rank order to order sequences later.
+
+rank.order <- TSSs.filtered %>%
+	map(
+		~as_tibble(.) %>%
+		mutate(rank=rank(desc(score), ties="first")) %>%
+		pull(rank)
+	)
+
 ## Add 5 bases to each side of TSS.
 
 TSS.region <- map(
@@ -73,15 +82,17 @@ map(names(TSS.seq.export), ~export.fasta(.))
 
 ## Prepare Data for Plotting
 
-TSS.formatted <- TSS.sequences %>%
-	map(
-		~as.character(.) %>%
+TSSs.formatted <- map2(
+	TSS.sequences, rank.order,
+	~as.character(.x) %>%
+		.[.y] %>%
 		str_split(pattern="", simplify=TRUE) %>%
 		as_tibble %>%
-		rowid_to_column(var="TSS") %>%
-		gather(key="position", value="base", -TSS) %>%
-		mutate(position=factor(position, levels=sprintf("V%s", 1:20)))
-	)
+		setNames(1:10) %>%
+		rowid_to_column(var="sequence") %>%
+		gather(key="Position", value="base", -sequence) %>%
+		mutate(Position=as.integer(Position))
+)
 
 ## Create directory to export to.
 
@@ -90,26 +101,24 @@ dir.create("TSS_motif_heatmaps")
 ## Function to plot data.
 
 plot.heatmap <- function(x) {
-	p <- ggplot(TSS.formatted[[x]], aes(x=position, y=TSS)) +
+	p <- ggplot(TSSs.formatted[[x]], aes(x=Position, y=sequence)) +
 		geom_tile(aes(fill=base)) +
 		scale_fill_viridis_d() +
 		theme_minimal() +
 		theme(
 			axis.title.y=element_blank(),
-			axis.text=element_blank(),
+			axis.text.y=element_blank(),
 			legend.title=element_blank(),
-			text=element_text(size=16),
+			axis.title.x=element_text(size=16, margin=margin(t=15)),
 			panel.grid=element_blank()
 		)
 
-	png(
+	ggsave(
 		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".png")),
-		height=450, width=450
+		plot=p, device="png", width=5, height=5
 	)
-	print(p)
-	dev.off()
 }
 
 ## Plot TSS sequence heatmaps.
 
-map(names(TSS.formatted), ~plot.heatmap(.))
+map(names(TSSs.formatted), ~plot.heatmap(.))
