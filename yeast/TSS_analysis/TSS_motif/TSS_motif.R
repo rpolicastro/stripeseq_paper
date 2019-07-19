@@ -104,7 +104,7 @@ dir.create("TSS_motif_heatmaps")
 plot.heatmap <- function(x) {
 	p <- ggplot(TSSs.formatted[[x]], aes(x=Position, y=sequence)) +
 		geom_tile(aes(fill=base)) +
-		scale_fill_manual(values=c("#07f900", "#0433ff", "#ffa501", "#ff2500")) +
+		scale_fill_viridis_d() +
 		theme_minimal() +
 		theme(
 			axis.title.y=element_blank(),
