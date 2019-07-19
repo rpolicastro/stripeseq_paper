@@ -140,11 +140,19 @@ consensus.matrix <- map(
 
 dir.create("sequence_logos")
 
+## Create viridis color scheme for bases.
+
+viridis.bases <- make_col_scheme(
+	chars=c("A", "C", "G", "T"),
+	groups=c("A", "C", "G", "T"),
+	cols=c("#431352", "#34698c", "#44b57b", "#fde540")
+)
+
 ## Output sequence logos.
 
 plot.seqlogos <- function(x) {
 	p <- ggplot() +
-		geom_logo(consensus.matrix[[x]]) +
+		geom_logo(consensus.matrix[[x]], col_scheme=viridis.bases) +
 		theme_logo()
 
 	ggsave(
