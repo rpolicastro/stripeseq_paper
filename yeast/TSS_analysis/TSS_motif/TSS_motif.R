@@ -104,7 +104,7 @@ dir.create("TSS_motif_heatmaps")
 plot.heatmap <- function(x) {
 	p <- ggplot(TSSs.formatted[[x]], aes(x=Position, y=sequence)) +
 		geom_tile(aes(fill=base)) +
-		scale_fill_viridis_d() +
+		scale_fill_manual(values=c("#07f900", "#0433ff", "#ffa501", "#ff2500")) +
 		theme_minimal() +
 		theme(
 			axis.title.y=element_blank(),
@@ -112,11 +112,12 @@ plot.heatmap <- function(x) {
 			legend.title=element_blank(),
 			axis.title.x=element_text(size=16, margin=margin(t=15)),
 			panel.grid=element_blank()
-		)
+		) +
+		scale_x_continuous(breaks=c(1,5,10))
 
 	ggsave(
 		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".png")),
-		plot=p, device="png", width=5, height=5
+		plot=p, device="png", width=4, height=4
 	)
 }
 
