@@ -25,6 +25,7 @@ deeptools \
 r-tidyverse \
 r-devtools \
 r-eulerr \
+r-ggseqlogo \
 bioconductor-genomicranges \
 bioconductor-genomicfeatures \
 bioconductor-biostrings \
@@ -32,8 +33,7 @@ bioconductor-rsamtools \
 bioconductor-rtracklayer \
 bioconductor-chipseeker \
 bioconductor-gviz \
-bioconductor-edger \
-bioconductor-seqlogo
+bioconductor-edger
 
 ## Update environment.
 
