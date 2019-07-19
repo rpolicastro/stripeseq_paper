@@ -4,7 +4,7 @@ library("GenomicRanges")
 library("GenomicFeatures")
 library("tidyverse")
 library("Rsamtools")
-library("seqLogo")
+library("ggseqlogo")
 
 #####################
 ## TSS Motif Finding
@@ -133,8 +133,7 @@ map(names(TSSs.formatted), ~plot.heatmap(.))
 consensus.matrix <- map(
 	TSS.sequences,
 	~consensusMatrix(.,as.prob=TRUE) %>%
-		.[rownames(.) %in% c("A", "C", "G", "T"),] %>%
-		makePWM
+		.[rownames(.) %in% c("A", "C", "G", "T"),]
 )
 
 ## Make output directory.
@@ -144,12 +143,14 @@ dir.create("sequence_logos")
 ## Output sequence logos.
 
 plot.seqlogos <- function(x) {
-	png(
+	p <- ggplot() +
+		geom_logo(consensus.matrix[[x]]) +
+		theme_logo()
+
+	ggsave(
 		file.path("sequence_logos", paste0("Sequence-Logo_", x, ".png")),
-		height=2, width=3, units="in", res=300
+		plot=p, device="png", width=5, height=1.5
 	)
-	seqLogo(consensus.matrix[[x]], xfontsize=8, yfontsize=8)
-	dev.off()
 }
 
 map(names(consensus.matrix), ~plot.seqlogos(.))
