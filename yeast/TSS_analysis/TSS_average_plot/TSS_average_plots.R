@@ -48,8 +48,8 @@ plot.TSS.averages <- function(x) {
 		theme_bw()
 
 	ggsave(
-		file.path("TSS_average_plots", paste0("TSS-Average-Plot_", x, ".png")),
-		plot=p, device="png", height=4, width=4
+		file.path("TSS_average_plots", paste0("TSS-Average-Plot_", x, ".pdf")),
+		plot=p, device="pdf", height=4, width=4
 	)
 }
 
