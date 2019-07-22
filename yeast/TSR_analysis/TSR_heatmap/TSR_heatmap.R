@@ -47,6 +47,10 @@ TSRs <- TSRs %>% map(
 	bind_rows()
 )
 
+## Export TSRs to make average plot later.
+
+saveRDS(TSRs, "TSR_Density.RDS")
+
 ## Plotting Data
 ## ----------
 
