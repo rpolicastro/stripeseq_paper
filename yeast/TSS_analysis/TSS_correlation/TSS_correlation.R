@@ -39,7 +39,7 @@ counts <- TSSs %>%
 ## Export raw counts.
 
 counts %>%
-	# Covnert back to tibble for export.
+	# Convert back to tibble for export.
 	as_tibble(rownames="TSS_Identifier") %>%
 	# Export raw counts.
 	write.table(
@@ -84,9 +84,13 @@ write.table(
 ## Plotting Correlation
 ## ----------
 
+## Prepare data for plotting.
+
 colnames(TMM) <- TMM %>%
         colnames %>%
         gsub(., pattern="-", replacement="_")
+
+## Get combinations of samples to plot.
 
 sample.combinations <- TMM %>%
 	colnames %>%
@@ -104,13 +108,14 @@ pmap(
 	sample.combinations,
 	function(sample_1, sample_2) {
 		p <- ggplot(TMM, aes_string(x=sample_1, y=sample_2)) +
-			geom_point() +
+			geom_point(size=0.25) +
 			theme_bw() +
-			theme(text=element_text(size=24)) +
+			scale_fill_viridis_d() +
 			geom_abline(intercept=0, slope=1, lty=2)
 		
-		png(file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".png")), width=850, height=850)
-		print(p)
-		dev.off()
+		ggsave(
+			file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".png")),
+			plot=p, device="png", width=5, height=5
+		)
 	}
 )
