@@ -108,7 +108,7 @@ pmap(
 	sample.combinations,
 	function(sample_1, sample_2) {
 		p <- ggplot(TMM, aes_string(x=sample_1, y=sample_2)) +
-			geom_point(size=0.25) +
+			geom_point(size=0.25, color="#431352") +
 			theme_bw() +
 			scale_fill_viridis_d() +
 			geom_abline(intercept=0, slope=1, lty=2)
