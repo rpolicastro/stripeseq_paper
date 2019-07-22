@@ -48,21 +48,68 @@ TSRs <- TSRs %>% map(
 )
 
 ## Plotting Data
+## ----------
+
+## Prepare data for plotting.
 
 plot.data <- map(
 	TSRs,
 	~dplyr::filter(., position >= -250 & position <= 250) %>%
-	mutate(position=factor(position, levels=-250:250))
+		mutate(position=factor(position, levels=-250:250)) %>%
+		complete(gene, position, fill=list(score=0)) %>%
+		mutate(
+			score=log2(score+1),
+			position=as.integer(position)
+		)
 )
 
-plot.data %>%
-	pluck(1) %>%
-	ggplot(aes(x=position, y=gene, fill=score)) +
+## Sort genes by total TSR signal.
+
+sorting.order <- map(
+	plot.data,
+	~filter(., score > 0) %>%
+		count(gene, score) %>%
+		group_by(gene) %>%
+		summarize(total.score=sum(n)) %>%
+		arrange(desc(total.score)) %>%
+		rowid_to_column %>%
+		dplyr::select(-total.score)
+)
+
+plot.data <- map2(
+	plot.data, sorting.order,
+	~mutate(.x, gene = factor(gene, levels=(arrange(.y, desc(rowid)) %>% pull(gene))))
+)
+
+## Create output directory.
+
+dir.create("TSR_heatmaps")
+
+## Plot heatmaps.
+
+plot.TSR.heatmaps <- function(x) {
+	p <- ggplot(plot.data[[x]], aes(x=position, y=gene, fill=score)) +
 		geom_tile() +
 		theme_minimal() +
 		scale_fill_viridis_c() +
 		theme(
 			axis.text.y=element_blank(),
-			axis.text.x=element_blank()
+			panel.grid=element_blank()
 		) +
-		scale_fill_continuous(na.value = 0)
+		geom_vline(xintercept=250, color="white", lty=2) +
+		labs(
+			x="Position",
+			y="Gene"
+		) +
+		scale_x_continuous(
+			breaks=c(0, 150, 250, 350, 500),
+			labels=c(-250, -150, 0, 150, 250)
+		)
+
+		ggsave(
+			file.path("TSR_heatmaps", paste0("TSR-Heatmap_", x, ".png")),
+			plot=p, device="png", height=4, width=3
+		)
+}
+
+map(names(plot.data), ~plot.TSR.heatmaps(.))
