@@ -116,6 +116,11 @@ plot.TSS.heatmap <- function(x) {
 		file.path("TSS_heatmaps", paste0("TSS-heatmap_", x, ".png")),
 		plot=p, device="png", height=4, width=4
 	)
+
+	ggsave(
+                file.path("TSS_heatmaps", paste0("TSS-heatmap_", x, ".pdf")),
+                plot=p, device="pdf", height=4, width=4
+        )
 }
 
 ## Plot heatmaps.
