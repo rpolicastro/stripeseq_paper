@@ -104,15 +104,19 @@ plot.promoters <- function(x) {
 	p <- ggplot(x, aes(x=threshold, y=perc.unique)) +
 		geom_line() +
 		geom_point(aes(size=n.genes, color=n.genes)) +
-		scale_color_viridis_c() +
-		ggtitle(x %>% pull(sample) %>% unique) +
+		scale_color_viridis_c(direction=-1) +
+		labs(
+			title = x %>% pull(sample) %>% unique,
+			y="Percent Unique TSSs",
+			x="Read Threshold"
+		)
 		theme(text=element_text(size=24))
 
-	file.name <- paste0("Promoter-Plot_", (x %>% pull(sample) %>% unique), ".png")
-	
-	png(file.path("promoter_plots", file.name), width=850, height=480)
-	print(p)
-	dev.off()
+	file.name <- paste0("Promoter-Plot_", (x %>% pull(sample) %>% unique), ".pdf")
+	ggsave(
+		file.path("promoter_plots", file.name),
+		plot=p, device="pdf", width=8, height=4
+	)
 }
 
 map(promoter.data.split, ~plot.promoters(.))
