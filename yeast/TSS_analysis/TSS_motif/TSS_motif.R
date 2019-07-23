@@ -117,7 +117,7 @@ plot.heatmap <- function(x) {
 
 	ggsave(
 		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".png")),
-		plot=p, device="png", width=4, height=4
+		plot=p, device="png", width=1, height=1
 	)
 	ggsave(
 		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".pdf")),
