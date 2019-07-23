@@ -31,6 +31,10 @@ TSRs.cleaned <- TSRs %>%
 ## Plotting Data
 ## ----------
 
+## Rename columns.
+
+
+
 ## Create output directory.
 
 dir.create("TSR_stat_plots")
@@ -40,23 +44,21 @@ dir.create("TSR_stat_plots")
 plot.tsr.stats <- function(x) {
 	p <- ggplot(TSRs.cleaned[[x]], aes(x=sample, y=stat_value, color=stat)) +
 		geom_jitter(size=0.1) +
-		facet_wrap(~stat, ncol=3, scales="free") +
+		facet_wrap(~stat, ncol=4, scales="free") +
 		scale_color_viridis_d() +
 		geom_boxplot(color="#1c1c1c", width=0.25, fill=NA, outlier.shape=NA) +
+		theme_minimal() +
 		theme(
 			axis.text.x=element_blank(),
 			legend.position="none",
 			axis.title.x=element_blank(),
-			axis.title.y=element_blank(),
-			text=element_text(size=18)
+			axis.title.y=element_blank()
 		)
 
-	png(
-		file.path("TSR_stat_plots", paste0("TSR-Stat-Plot_", x, ".png")),
-		height=600, width=450
+	ggsave(
+		file.path("TSR_stat_plots", paste0("TSR-Stat-Plot_", x, ".tiff")),
+		plot=p, device="tiff", height=4.5, width=6
 	)
-	print(p)
-	dev.off()
 }
 
 ## Plot TSR stats.
