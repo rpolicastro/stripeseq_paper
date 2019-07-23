@@ -112,7 +112,7 @@ dir.create("corr_matrix_plot")
 
 ggsave(
 	file.path("corr_matrix_plot", "corr_matrix_plot.pdf"),
-	plot=p, device="pdf", height=6, width=7
+	plot=p, device="pdf", height=5.5, width=7
 )
 
 ## Plotting Correlation

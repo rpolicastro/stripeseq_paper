@@ -59,15 +59,14 @@ plot.distribution <- function(x) {
 		theme(
 			axis.text.y=element_blank(),
 			axis.title.y=element_blank(),
-			text=element_text(size=18)
+			text=element_text(size=18),
+			panel.grid=element_blank()
 		)
 
-	png(
-		file.path("distribution_plots", paste0("Genomic-Distribution_", x, ".png")),
-		width=500, height=150
+	ggsave(
+		file.path("distribution_plots", paste0("Genomic-Distribution_", x, ".pdf")),
+		plot=p, device="pdf", width=5, height=2
 	)
-	print(p)
-	dev.off() 
 }
 
 ## Create output directory.
