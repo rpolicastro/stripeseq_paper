@@ -116,12 +116,8 @@ plot.heatmap <- function(x) {
 		scale_x_continuous(breaks=c(1,5,10))
 
 	ggsave(
-		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".png")),
-		plot=p, device="png", width=1, height=1
-	)
-	ggsave(
-		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".pdf")),
-		plot=p, device="pdf", width=4, height=4
+		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".tiff")),
+		plot=p, device="tiff", width=5, height=5
 	)
 }
 
