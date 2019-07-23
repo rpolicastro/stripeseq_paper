@@ -23,3 +23,16 @@ sample.combinations <- TSRs %>%
 	combinations(6, 2, ., repeats.allowed=FALSE) %>%
 	as_tibble %>%
 	dplyr::rename("sample_1"=1, "sample_2"=2)
+
+## Jaccard Index
+## ----------
+
+intersects <- GenomicRanges::intersect(TSRs[[1]], TSRs[[2]], ignore.strand = FALSE)
+intersection <- sum(width(intersects))
+union <- sum(width(GenomicRanges::union(TSRs[[1]], TSRs[[2]], ignore.strand = FALSE)))
+ans <- DataFrame(
+	intersection,
+	union,
+	jaccard = intersection/union,
+	n_intersections = length(intersects)
+)
