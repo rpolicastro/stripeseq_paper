@@ -5,6 +5,7 @@ library("tidyverse")
 library("edgeR")
 library("gtools")
 
+
 ##########################################
 ## Get TSS Correlation Between Replicates
 ##########################################
@@ -81,6 +82,39 @@ write.table(
 	sep="\t", col.names=T, row.names=F, quote=F
 )
 
+## Plotting Correlation Matrix
+## ----------
+
+## Prepare data for plotting.
+
+corr.matrix <- TMM %>%
+	dplyr::select(-TSS_position) %>%
+	as.matrix %>%
+	cor %>%
+	as_tibble(rownames="sample_1") %>%
+	gather(key="sample_2", value="pearson", -sample_1) %>%
+	mutate(pearson=round(pearson, 3))
+
+## Plot correlation matrix.
+
+p <- ggplot(corr.matrix, aes(x=sample_1, y=sample_2, fill=pearson, label=pearson)) +
+	geom_tile(color="white", lwd=0.5) +
+	geom_label(color="white", label.size=NA, fill=NA) +
+	scale_fill_viridis_c(limits=c(0.9,1), name="Pearson") +
+	theme_minimal() +
+	theme(
+		axis.text.x=element_text(angle=45, hjust=1),
+		panel.grid=element_blank(),
+		axis.title=element_blank()
+	)
+
+dir.create("corr_matrix_plot")
+
+ggsave(
+	file.path("corr_matrix_plot", "corr_matrix_plot.pdf"),
+	plot=p, device="pdf", height=6, width=7
+)
+
 ## Plotting Correlation
 ## ----------
 
@@ -114,8 +148,8 @@ pmap(
 			geom_abline(intercept=0, slope=1, lty=2)
 		
 		ggsave(
-			file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".png")),
-			plot=p, device="png", width=5, height=5
+			file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".tiff")),
+			plot=p, device="tiff", width=5, height=5
 		)
 	}
 )
