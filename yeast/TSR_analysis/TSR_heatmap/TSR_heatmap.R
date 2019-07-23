@@ -111,8 +111,8 @@ plot.TSR.heatmaps <- function(x) {
 		)
 
 		ggsave(
-			file.path("TSR_heatmaps", paste0("TSR-Heatmap_", x, ".png")),
-			plot=p, device="png", height=4, width=3
+			file.path("TSR_heatmaps", paste0("TSR-Heatmap_", x, ".tiff")),
+			plot=p, device="tiff", height=4, width=3
 		)
 }
 
