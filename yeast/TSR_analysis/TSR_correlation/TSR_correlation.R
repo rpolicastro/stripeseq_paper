@@ -13,6 +13,11 @@ library("gtools")
 
 TSRs <- readRDS("../get_TSRs/TSRs.RDS")
 
+## Merge TSRs
+## ----------
+
+
+
 ## Get Overlapping Regions
 ## ----------
 
@@ -27,12 +32,33 @@ sample.combinations <- TSRs %>%
 ## Jaccard Index
 ## ----------
 
-intersects <- GenomicRanges::intersect(TSRs[[1]], TSRs[[2]], ignore.strand = FALSE)
-intersection <- sum(width(intersects))
-union <- sum(width(GenomicRanges::union(TSRs[[1]], TSRs[[2]], ignore.strand = FALSE)))
-ans <- DataFrame(
-	intersection,
-	union,
-	jaccard = intersection/union,
-	n_intersections = length(intersects)
+## Bin TSRs into deciles.
+
+TSRs.decile <- map(
+	TSRs,
+	~as_tibble(.) %>%
+		mutate(decile=ntile(nTAGs,10)) %>%
+		makeGRangesFromDataFrame(keep.extra.columns=TRUE)
 )
+
+## Calculate jaccard index per decile.
+
+find.jaccard <- function(x, y) {
+	x <- makeGRangesFromDataFrame(x, keep.extra.columns=TRUE)
+	y <- makeGRangesFromDataFrame(y, keep.extra.columns=TRUE)
+
+	intersects <- GenomicRanges::intersect(x, y, ignore.strand = FALSE)
+	intersection <- intersects %>% width %>% sum
+
+	union <- GenomicRanges::union(x, y, ignore.strand = FALSE) %>%
+		width %>% sum
+
+	ans <- DataFrame(
+		intersection,
+		union,
+		jaccard = intersection/union,
+		n_intersections = length(intersects)
+	)
+
+	return(ans)
+}
