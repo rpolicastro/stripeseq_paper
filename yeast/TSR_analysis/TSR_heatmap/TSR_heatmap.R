@@ -85,6 +85,16 @@ plot.data <- map2(
 	~mutate(.x, gene = factor(gene, levels=(arrange(.y, desc(rowid)) %>% pull(gene))))
 )
 
+## Put uper limit on score for scale.
+
+plot.data <- map(
+	plot.data,
+	~mutate(., score=case_when(
+		score > 8 ~ 8,
+		score <= 8 ~ score
+	))
+)
+
 ## Create output directory.
 
 dir.create("TSR_heatmaps")
@@ -95,7 +105,11 @@ plot.TSR.heatmaps <- function(x) {
 	p <- ggplot(plot.data[[x]], aes(x=position, y=gene, fill=score)) +
 		geom_tile() +
 		theme_minimal() +
-		scale_fill_viridis_c() +
+		scale_fill_viridis_c(
+			breaks=c(0,2,4,6,8),
+			labels=c(0,2,4,6,">8"),
+			limits=c(0,8)
+		) +
 		theme(
 			axis.text.y=element_blank(),
 			panel.grid=element_blank()
@@ -112,7 +126,7 @@ plot.TSR.heatmaps <- function(x) {
 
 		ggsave(
 			file.path("TSR_heatmaps", paste0("TSR-Heatmap_", x, ".tiff")),
-			plot=p, device="tiff", height=4, width=3
+			plot=p, device="tiff", type="cairo", height=4, width=3
 		)
 }
 
