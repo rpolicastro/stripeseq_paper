@@ -112,7 +112,7 @@ dir.create("corr_matrix_plot")
 
 ggsave(
 	file.path("corr_matrix_plot", "corr_matrix_plot.pdf"),
-	plot=p, device="pdf", height=5.5, width=7
+	plot=p, device=cairo_pdf, height=5.5, width=7
 )
 
 ## Plotting Correlation
@@ -149,7 +149,7 @@ pmap(
 		
 		ggsave(
 			file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".tiff")),
-			plot=p, device="tiff", width=5, height=5
+			plot=p, device="tiff", type="cairo", width=3, height=3
 		)
 	}
 )
