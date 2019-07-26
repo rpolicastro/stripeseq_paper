@@ -21,7 +21,7 @@ TMM <- read.delim(
 
 ## Get log2+1 counts.
 
-counts <- mutate_all(~log2(.+1))
+counts <- mutate_all(TMM, ~log2(.+1))
 
 ## Get combinations of comparisons.
 
@@ -46,9 +46,10 @@ pmap(
 			theme(text=element_text(size=24)) +
 			geom_abline(intercept=0, slope=1, lty=2)
 		
-		png(file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".png")), width=850, height=850)
-		print(p)
-		dev.off()
+		ggsave(
+			file.path("corr_plots", paste0(sample_1, "-vs-", sample_2, ".tiff")),
+			plot=p, device="tiff", type="cairo", height=6.5, width=6.5
+		)
 	}
 )
 
@@ -85,7 +86,7 @@ dir.create("corr_matrix_plot")
 
 ggsave(
 	file.path("corr_matrix_plot", "corr_matrix_plot.pdf"),
-	plot=p, device="pdf", height=5.5, width=7
+	plot=p, device=cairo_pdf, height=5.5, width=7
 )
 
 ## Export text results.
