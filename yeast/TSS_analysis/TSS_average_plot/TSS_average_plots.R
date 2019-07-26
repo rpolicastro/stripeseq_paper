@@ -49,7 +49,7 @@ plot.TSS.averages <- function(x) {
 
 	ggsave(
 		file.path("TSS_average_plots", paste0("TSS-Average-Plot_", x, ".pdf")),
-		plot=p, device="pdf", height=4, width=4
+		plot=p, device=cairo_pdf, height=4, width=4
 	)
 }
 
