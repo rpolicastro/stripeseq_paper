@@ -43,11 +43,12 @@ plot.max.utr <- function(x) {
 		labs(
 			x="TSS With Minimal Distance to Start Codon",
 			y="Density"
-		)
+		) +
+		geom_vline(xintercept=0, lty=2)
 
 	ggsave(
 		file.path("max_UTR_length_plots", paste0("Max-UTR-Length_", x, ".pdf")),
-		plot=p, device="pdf", width=5, height=5
+		plot=p, device=cairo_pdf, width=5, height=4
 	)
 }
 
