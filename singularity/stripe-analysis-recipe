@@ -1,4 +1,3 @@
-
 bootstrap: docker
 From: continuumio/miniconda3
 
@@ -21,11 +20,11 @@ conda update -n base -y -c defaults conda
 ## Create environment.
 
 conda create -n stripe-seq-analysis -y -c conda-forge -c bioconda \
-deeptools \
 r-tidyverse \
 r-devtools \
 r-eulerr \
 r-ggseqlogo \
+r-gtools \
 bioconductor-genomicranges \
 bioconductor-genomicfeatures \
 bioconductor-biostrings \
@@ -33,7 +32,8 @@ bioconductor-rsamtools \
 bioconductor-rtracklayer \
 bioconductor-chipseeker \
 bioconductor-gviz \
-bioconductor-edger
+bioconductor-edger \
+bioconductor-tsrchitect
 
 ## Update environment.
 
@@ -42,3 +42,17 @@ conda update -n stripe-seq-analysis -y -c conda-forge -c bioconda --all
 ## Clean up extra files.
 
 conda clean -y --all
+
+## Add stripe-saturation software to path
+
+export PATH=/opt/conda/envs/stripe-seq-analysis/bin:$PATH
+
+## Install latest build of TSRchitect
+
+R --slave -e 'Sys.setenv(TAR="/bin/tar");devtools::install_github("BrendelGroup/TSRchitect",ref="master")'
+
+%environment
+
+## Add software to environment
+
+export PATH=/opt/conda/envs/stripe-seq-analysis/bin:$PATH
