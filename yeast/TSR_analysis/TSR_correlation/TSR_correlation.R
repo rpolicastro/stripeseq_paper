@@ -101,7 +101,7 @@ pmap(
 
 		ggsave(
 			file.path("TSR_correlation", paste0(sample_1, "_vs_", sample_2, ".tiff")),
-			plot=p, device="tiff", width=5, height=5
+			plot=p, device="tiff", type="cairo", width=3, height=3
 		) 
 	}
 )
