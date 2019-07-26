@@ -61,7 +61,7 @@ plot.dominant.distance <- function(x) {
 
 	ggsave(
 		file.path("dominant_TSS_distance_plots", paste0("Dominant-TSS-Distance_", x, ".pdf")),
-		plot=p, device="pdf", height=4, width=5
+		plot=p, device=cairo_pdf, height=4, width=5
 	)
 }
 
