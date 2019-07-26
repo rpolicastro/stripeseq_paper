@@ -65,7 +65,7 @@ plot.distribution <- function(x) {
 
 	ggsave(
 		file.path("distribution_plots", paste0("Genomic-Distribution_", x, ".pdf")),
-		plot=p, device="pdf", width=5, height=2
+		plot=p, device=cairo_pdf, width=5, height=2
 	)
 }
 
