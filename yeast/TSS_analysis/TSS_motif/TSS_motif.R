@@ -117,7 +117,7 @@ plot.heatmap <- function(x) {
 
 	ggsave(
 		file.path("TSS_motif_heatmaps", paste0("TSS-Sequence-Heatmap_", x, ".tiff")),
-		plot=p, device="tiff", width=5, height=5
+		plot=p, device="tiff", type="cairo", width=3, height=3
 	)
 }
 
@@ -157,7 +157,7 @@ plot.seqlogos <- function(x) {
 
 	ggsave(
 		file.path("sequence_logos", paste0("Sequence-Logo_", x, ".pdf")),
-		plot=p, device="pdf", width=5, height=1.5
+		plot=p, device=cairo_pdf, width=5, height=1.5
 	)
 }
 
