@@ -89,7 +89,11 @@ to.plot <- map(
 	~mutate_if(., is.numeric, ~log2(.+1)) %>%
 		gather(key="Position", value="log2_score", -geneId) %>%
 		mutate(Position=as.integer(Position)) %>%
-		dplyr::rename("Gene"=geneId)
+		dplyr::rename("Gene"=geneId) %>%
+		mutate(log2_score=case_when(
+			log2_score > 5 ~ 5,
+			log2_score <= 5 ~ log2_score
+		))
 )
 
 ## Create output directory.
@@ -108,19 +112,20 @@ plot.TSS.heatmap <- function(x) {
 				axis.text.y=element_blank(),
 				panel.grid=element_blank()
 			) +
-			scale_fill_viridis_c(limits=c(0,4)) +
+			scale_fill_viridis_c(
+				limits=c(0,5),
+				breaks=c(0:5),
+				labels=c("0","1","2","3","4",">5"),
+				name="Log2(Score)"
+			) +
 			geom_vline(xintercept=0, lty=2, color="white") +
 			labs(fill="log2(Score + 1)")
 
 	ggsave(
-		file.path("TSS_heatmaps", paste0("TSS-heatmap_", x, ".png")),
-		plot=p, device="png", height=4, width=4
+		file.path("TSS_heatmaps", paste0("TSS-heatmap_", x, ".tiff")),
+		plot=p, device="tiff", type="cairo", height=4, width=4
 	)
 
-	ggsave(
-                file.path("TSS_heatmaps", paste0("TSS-heatmap_", x, ".pdf")),
-                plot=p, device="pdf", height=4, width=4
-        )
 }
 
 ## Plot heatmaps.
