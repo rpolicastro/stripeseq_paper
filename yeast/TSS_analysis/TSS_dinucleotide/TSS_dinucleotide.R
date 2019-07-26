@@ -76,7 +76,7 @@ plot.dinucleotide.frequencies <- function(x) {
 
 	ggsave(
 		file.path("dinucleotide_frequencies", paste0("Dinucleotide-Frequencies_", x, ".pdf")),
-		plot=p, device="pdf", width=5, height=3
+		plot=p, device=cairo_pdf, width=3, height=2
 	)
 }
 
