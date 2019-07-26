@@ -25,6 +25,7 @@ r-devtools \
 r-eulerr \
 r-ggseqlogo \
 r-gtools \
+r-cairo \
 bioconductor-genomicranges \
 bioconductor-genomicfeatures \
 bioconductor-biostrings \
