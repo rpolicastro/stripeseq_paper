@@ -39,14 +39,19 @@ plot.complexity <- function(x) {
 		scale_color_viridis_d() +
 		theme_bw() +
 		ylim(0,NA) +
-		theme(text=element_text(size=18))
+		theme(
+			text=element_text(size=18),
+			legend.position="none"
+		) +
+		labs(
+			y="Log2(Unique TSSs/TSR + 1)",
+			x="Annotation"
+		)
 
-	png(
-		file.path("complexity_plots", paste0("TSR-Complexity-Plot_", x, ".png")),
-		width=850, height=600
+	ggsave(
+		file.path("complexity_plots", paste0("TSR-Complexity-Plot_", x, ".tiff")),
+		plot=p, device="tiff", type="cairo", width=6.5, height=4
 	)
-	print(p)
-	dev.off()
 }
 
 ## Plot TSR complexity.
