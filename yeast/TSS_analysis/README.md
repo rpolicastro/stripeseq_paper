@@ -10,6 +10,11 @@ This directory contains the TSS analysis for yeast STRIPE-seq data.
 - **annotate_TSSs**: Annotate TSSs to nearest transcript.
 - **TSS_genomic_distribution**: Get fraction of TSSs that are promoter proximal while iterating through global threshold values.
 - **TSS_average_plot**: Average plots of TSSs cenetered on start codon (for yeast data).
+- **TSS_dinucleotide**: Dinucleotide frequencies for the -1/+1 bases.
+- **TSS_heatmap**: Heatmap of TSSs relative to start codons.
+- **TSS_motif**: Sequence color map and seq logo of bases centered around TSSs.
+- **dominant_TSS_distance**: Average distances of dominant TSS in promoter to start codon.
+- **max_UTR_length**: Average maximum 5' UTR length detectable for genes.
 
 ## Run Analysis.
 
