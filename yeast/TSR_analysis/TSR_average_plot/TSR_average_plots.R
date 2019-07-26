@@ -40,7 +40,7 @@ plot.TSR.average <- function(x) {
 
 	ggsave(
 		file.path("TSR_average_plots", paste0("TSR-Average-Plot_", x, ".pdf")),
-		plot=p, device="pdf", height=5, width=5
+		plot=p, device=cairo_pdf, height=5, width=5
 	)
 }
 
