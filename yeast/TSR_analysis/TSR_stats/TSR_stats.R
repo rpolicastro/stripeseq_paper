@@ -57,7 +57,7 @@ plot.tsr.stats <- function(x) {
 
 	ggsave(
 		file.path("TSR_stat_plots", paste0("TSR-Stat-Plot_", x, ".tiff")),
-		plot=p, device="tiff", height=4.5, width=6
+		plot=p, device="tiff", type="cairo", height=3.5, width=5
 	)
 }
 
