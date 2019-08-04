@@ -32,7 +32,7 @@ TSSs.annotated <- map(
 		TxDb=annotation,
 		sameStrand=TRUE
 	) %>%
-	as_tibble
+	as_tibble(.name_repair="unique")
 )
 
 ## Export Annotated TSSs
@@ -44,12 +44,12 @@ saveRDS(TSSs.annotated, "TSSs_annotated.RDS")
 
 ##  Save to file.
 
-dir.create("annotated_TSSs")
+dir.create("annotated_TSSs", showWarnings=FALSE)
 
-map(
-	names(TSSs.annotated),
+map2(
+	TSSs.annotated, names(TSSs.annotated),
 	~ write.table(
-		TSSs.annotated[[.]], file.path("annotated_TSSs", paste0("Annotated-TSSs_", ., ".tsv")),
+		.x, file.path("annotated_TSSs", paste0("Annotated-TSSs_", .y, ".tsv")),
 		sep="\t", col.names=T, row.names=F, quote=F, na=""
 	)
 )
