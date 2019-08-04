@@ -16,7 +16,7 @@ library("GenomicRanges")
 TMM <- read.delim(
 	"../TSS_correlation/TMM_Normalized_Counts.tsv",
 	sep="\t", header=T, stringsAsFactors=F
-) %>% as_tibble
+) %>% as_tibble(.name_repair="unique")
 
 ## Format the data for export.
 
@@ -29,7 +29,7 @@ grange <- TMM %>%
 ## Export Bedgraphs
 ## ----------
 
-dir.create("bedgraphs")
+dir.create("bedgraphs", showWarnings=FALSE)
 
 export.bedgraphs <- function(x) {
 	sample.name <- x %>% 
@@ -50,4 +50,4 @@ export.bedgraphs <- function(x) {
 	export(x, file.path("bedgraphs", file.name), "bedgraph")
 }
 
-grange %>% map(~export.bedgraphs(.))
+invisible(map(grange, ~export.bedgraphs(.)))
