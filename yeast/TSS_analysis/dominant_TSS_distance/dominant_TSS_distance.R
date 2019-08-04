@@ -44,12 +44,12 @@ distance.summary <- map(
 
 ## output directory.
 
-dir.create("dominant_TSS_distance_plots")
+dir.create("dominant_TSS_distance_plots", showWarnings=FALSE)
 
 ## Function to plot dominant TSS distance to start codon.
 
-plot.dominant.distance <- function(x) {
-	p <- ggplot(distance.summary[[x]], aes(distanceToTSS)) +
+plot.dominant.distance <- function(x, y) {
+	p <- ggplot(x, aes(distanceToTSS)) +
 		geom_density(fill="#431352", color="#431352") +
 		xlim(-200,200) +
 		theme_bw() +
@@ -60,11 +60,11 @@ plot.dominant.distance <- function(x) {
 		geom_vline(xintercept=0, lty=2)
 
 	ggsave(
-		file.path("dominant_TSS_distance_plots", paste0("Dominant-TSS-Distance_", x, ".pdf")),
+		file.path("dominant_TSS_distance_plots", paste0("Dominant-TSS-Distance_", y, ".pdf")),
 		plot=p, device=cairo_pdf, height=4, width=5
 	)
 }
 
 ## Plot data.
 
-map(names(distance.summary), ~plot.dominant.distance(.))
+invisible(map2(distance.summary, names(distance.summary), ~plot.dominant.distance(.x, .y)))
